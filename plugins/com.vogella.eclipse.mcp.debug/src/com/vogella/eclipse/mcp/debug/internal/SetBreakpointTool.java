@@ -177,11 +177,12 @@ public final class SetBreakpointTool implements IMcpTool {
 
 	/**
 	 * JDT evaluates a condition only while it is enabled, and a new breakpoint starts with it
-	 * disabled, so storing the expression alone would suspend on every hit.
+	 * disabled, so storing the expression alone would suspend on every hit. A blank condition
+	 * stays disabled, so the breakpoint list does not report one in effect.
 	 */
 	private static void setCondition(IJavaLineBreakpoint breakpoint, String condition) throws CoreException {
 		breakpoint.setCondition(condition);
-		breakpoint.setConditionEnabled(true);
+		breakpoint.setConditionEnabled(!condition.isBlank());
 		breakpoint.setConditionSuspendOnTrue(true);
 	}
 
